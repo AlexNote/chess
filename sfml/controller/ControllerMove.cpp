@@ -17,8 +17,7 @@ void ControllerMove::checkSelect(sf::Event& event, sf::RenderWindow& window, Vec
 //            qDebug() << board->getCellBoard(1,1);
 //            qDebug() << board->getCellBoard(2,2);
 //            qDebug() << board->getCellBoard(7,7);
-//            qDebug() << board->getCellBoard(0,7);
-//            qDebug() << board->getCellBoard(7,0);
+
             for (size_t iterFigure = 0, size = figures.getAllFigures().size(); iterFigure < size; iterFigure++)
             {
                 if (figures.getAllFigures()[iterFigure]->getFigure().getGlobalBounds().contains(cursorPos.x, cursorPos.y)) // курсор над нужной фигурой
