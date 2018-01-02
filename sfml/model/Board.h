@@ -15,7 +15,6 @@ public:
     void setCellBoard(int x, int y, QString team);
 
     void load(std::shared_ptr<MementoBoard> boardSave);
-
     std::shared_ptr<MementoBoard> save();
 
 private:

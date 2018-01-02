@@ -71,45 +71,58 @@ void ControllerMove::takeFigure(VectorOfFigures& figures)
     int newPosY = selectFigure->getYcell();
     QString team = selectFigure->getTeam();
     bool differents = false;
-    if (selectFigure->getPosition().x < 30 || selectFigure->getPosition().y < 30 || selectFigure->getPosition().x > 542 || selectFigure->getPosition().y > 542){
+    if (selectFigure->getPosition().x < 30 || selectFigure->getPosition().y < 30 || selectFigure->getPosition().x > 542 || selectFigure->getPosition().y > 542)
+    {
         selectFigure->setPositionCell(oldPosX, oldPosY);
     }
     else if ( (oldPosX != newPosX) || (oldPosY != newPosY) ) // фигура была передвинута
     {
-        if (board->getCellBoard(newPosX, newPosY) == "") // клетка свободна
+        if (selectFigure->getAvailableStep(newPosX, newPosY)) // если фигура может встать в эту клетку
         {
-            selectFigure->setPositionCell(newPosX, newPosY);
-            board->setCellBoard(oldPosX, oldPosY, "");
-            board->setCellBoard(newPosX, newPosY, team);
-            team == "White" ? figures.setCurrentStep("Black") : figures.setCurrentStep("White");
-        }
-        else if (board->getCellBoard(newPosX, newPosY) == team) // клетка занята своей фигурой. поставить обратно
-        {
-            selectFigure->setPositionCell(oldPosX, oldPosY);
-        }
-        else // клетка занята чужой фигурой. найти эту фигуру в векторе
-        {
-            size_t iterFigure = 0;
-            size_t size = figures.getAllFigures().size();
-
-            for (iterFigure = 0, size = figures.getAllFigures().size() ; iterFigure < size; iterFigure++)
+            if (board->getCellBoard(newPosX, newPosY) == "") // клетка свободна
             {
-                int takenX = figures.getAllFigures()[iterFigure]->getXcell();
-                int takenY = figures.getAllFigures()[iterFigure]->getYcell();
-                if ( (newPosX == takenX) && (newPosY == takenY) ) // найдена забиаемая фигура
-                {
-                    differents = true;
-                    break;
-                }
-            }
-            if (differents) // забрать фигуру. удалить её из вектора фигур
-            {
-                figures.getAllFigures().erase(figures.getAllFigures().begin()+iterFigure); // удалить фигуру iterFigure
+                selectFigure->setPositionCell(newPosX, newPosY);
                 board->setCellBoard(oldPosX, oldPosY, "");
                 board->setCellBoard(newPosX, newPosY, team);
                 team == "White" ? figures.setCurrentStep("Black") : figures.setCurrentStep("White");
             }
+            else if (board->getCellBoard(newPosX, newPosY) == team) // клетка занята своей фигурой. поставить обратно
+            {
+                selectFigure->setPositionCell(oldPosX, oldPosY);
+            }
+            else // клетка занята чужой фигурой. найти эту фигуру в векторе
+            {
+                size_t iterFigure = 0;
+                size_t size = figures.getAllFigures().size();
+
+                for (iterFigure = 0, size = figures.getAllFigures().size() ; iterFigure < size; iterFigure++)
+                {
+                    int takenX = figures.getAllFigures()[iterFigure]->getXcell();
+                    int takenY = figures.getAllFigures()[iterFigure]->getYcell();
+                    if ( (newPosX == takenX) && (newPosY == takenY) ) // найдена забиаемая фигура
+                    {
+                        differents = true;
+                        break;
+                    }
+                }
+                if (differents) // забрать фигуру. удалить её из вектора фигур
+                {
+                    figures.getAllFigures().erase(figures.getAllFigures().begin()+iterFigure); // удалить фигуру iterFigure
+                    board->setCellBoard(oldPosX, oldPosY, "");
+                    board->setCellBoard(newPosX, newPosY, team);
+                    team == "White" ? figures.setCurrentStep("Black") : figures.setCurrentStep("White");
+                }
+            }
         }
+        else
+        {
+            selectFigure->setPositionCell(oldPosX, oldPosY);
+        }
+    }
+
+    for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+    {
+        (*iterFigure)->calcSteps();
     }
 }
 

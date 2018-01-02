@@ -28,32 +28,10 @@ VectorOfFigures::VectorOfFigures()
     for (int i = 0, posX = 63; i < 8; i++, posX += 64)
         allFigures.emplace_back( std::shared_ptr<Pawn>(new Pawn(QString("Black"), posX, 127)) );
 
-
-//    /// белые фигуры
-//    allFigures.emplace_back( std::shared_ptr<Rook>(new Rook(QString("White"), 63, 511)) );
-//    allFigures.emplace_back( std::shared_ptr<Knight>(new Knight(QString("White"), 127, 511)) );
-//    allFigures.emplace_back( std::shared_ptr<Bishop>(new Bishop(QString("White"), 191, 511)) );
-//    allFigures.emplace_back( std::shared_ptr<Queen>(new Queen(QString("White"), 255, 511)) );
-//    allFigures.emplace_back( std::shared_ptr<King>(new King(QString("White"), 319, 511)) );
-//    allFigures.emplace_back( std::shared_ptr<Bishop>(new Bishop(QString("White"), 383, 511)) );
-//    allFigures.emplace_back( std::shared_ptr<Knight>(new Knight(QString("White"), 447, 511)) );
-//    allFigures.emplace_back( std::shared_ptr<Rook>(new Rook(QString("White"), 511, 511)) );
-//    // пешки
-//    for (int i = 0, posX = 63; i < 8; i++, posX += 64)
-//        allFigures.emplace_back( std::shared_ptr<Pawn>(new Pawn(QString("White"), posX, 447)) );
-
-//    /// черные фигуры
-//    allFigures.emplace_back( std::shared_ptr<Rook>(new Rook(QString("Black"), 63, 63)) );
-//    allFigures.emplace_back( std::shared_ptr<Knight>(new Knight(QString("Black"), 127, 63)) );
-//    allFigures.emplace_back( std::shared_ptr<Bishop>(new Bishop(QString("Black"), 191, 63)) );
-//    allFigures.emplace_back( std::shared_ptr<Queen>(new Queen(QString("Black"), 255, 63)) );
-//    allFigures.emplace_back( std::shared_ptr<King>(new King(QString("Black"), 319, 63)) );
-//    allFigures.emplace_back( std::shared_ptr<Bishop>(new Bishop(QString("Black"), 383, 63)) );
-//    allFigures.emplace_back( std::shared_ptr<Knight>(new Knight(QString("Black"), 447, 63)) );
-//    allFigures.emplace_back( std::shared_ptr<Rook>(new Rook(QString("Black"), 511, 63)) );
-//    // пешки
-//    for (int i = 0, posX = 63; i < 8; i++, posX += 64)
-//        allFigures.emplace_back( std::shared_ptr<Pawn>(new Pawn(QString("Black"), posX, 127)) );
+    for (auto iterFigure = allFigures.begin(); iterFigure != allFigures.end(); ++iterFigure)
+    {
+        (*iterFigure)->calcSteps();
+    }
 
     currentStep = "White";
 }

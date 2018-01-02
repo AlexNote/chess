@@ -13,8 +13,7 @@ public:
     void calcSteps();
 
 private:
-    void isFirstStep();
-    bool firstStep;
+    bool isFirstStep();
 };
 
 #endif // PAWN_H

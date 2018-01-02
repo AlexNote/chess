@@ -87,3 +87,8 @@ QString Figure::getTeam()
     return team;
 }
 
+bool Figure::getAvailableStep(int x, int y)
+{
+    return availableSteps[y][x];
+}
+
