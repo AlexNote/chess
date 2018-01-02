@@ -62,14 +62,14 @@ void Rook::calcSteps()
             {
                 availableSteps[coordYcell][i-1] = true;
             }
-            // клетка слева занята черной фигурой
+            // клетка слева занята чужой фигурой
             if(board->getCellBoard(i-1, coordYcell) == "Black")
             {
                 availableSteps[coordYcell][i-1] = true;
                 break;
             }
-            // клетка слева занята белой фигурой
-            if(board->getCellBoard(i-1, coordYcell) == "White")
+            // клетка слева занята своей фигурой
+            if(board->getCellBoard(i-1, coordYcell) == team)
                 break;
         }
         // горизонталь вправо
@@ -80,14 +80,14 @@ void Rook::calcSteps()
             {
                 availableSteps[coordYcell][i+1] = true;
             }
-            // клетка справа занята черной фигурой
+            // клетка справа занята чужой фигурой
             if(board->getCellBoard(i+1, coordYcell) == "Black")
             {
                 availableSteps[coordYcell][i+1] = true;
                 break;
             }
-            // клетка справа занята белой фигурой
-            if(board->getCellBoard(i+1, coordYcell) == "White")
+            // клетка справа занята своей фигурой
+            if(board->getCellBoard(i+1, coordYcell) == team)
                 break;
         }
         // вертикаль вверх
@@ -98,14 +98,14 @@ void Rook::calcSteps()
             {
                 availableSteps[i-1][coordXcell] = true;
             }
-            // клетка сверху занята черной фигурой
+            // клетка сверху занята чужой фигурой
             if(board->getCellBoard(coordXcell, i-1) == "Black")
             {
                 availableSteps[i-1][coordXcell] = true;
                 break;
             }
-            // клетка сверху занята белой фигурой
-            if(board->getCellBoard(coordXcell, i-1) == "White")
+            // клетка сверху занята своей фигурой
+            if(board->getCellBoard(coordXcell, i-1) == team)
                 break;
         }
         // вертикаль вниз
@@ -116,14 +116,14 @@ void Rook::calcSteps()
             {
                 availableSteps[i+1][coordXcell] = true;
             }
-            // клетка снизу занята черной фигурой
+            // клетка снизу занята чужой фигурой
             if(board->getCellBoard(coordXcell, i+1) == "Black")
             {
                 availableSteps[i+1][coordXcell] = true;
                 break;
             }
-            // клетка снизу занята белой фигурой
-            if(board->getCellBoard(coordXcell, i+1) == "White")
+            // клетка снизу занята своей фигурой
+            if(board->getCellBoard(coordXcell, i+1) == team)
                 break;
         }
     }
@@ -139,14 +139,14 @@ void Rook::calcSteps()
             {
                 availableSteps[coordYcell][i-1] = true;
             }
-            // клетка слева занята белой фигурой
+            // клетка слева занята чужой фигурой
             if(board->getCellBoard(i-1, coordYcell) == "White")
             {
                 availableSteps[coordYcell][i-1] = true;
                 break;
             }
-            // клетка слева занята черной фигурой
-            if(board->getCellBoard(i-1, coordYcell) == "Black")
+            // клетка слева занята своей фигурой
+            if(board->getCellBoard(i-1, coordYcell) == team)
                 break;
         }
         // горизонталь вправо
@@ -157,14 +157,14 @@ void Rook::calcSteps()
             {
                 availableSteps[coordYcell][i+1] = true;
             }
-            // клетка справа занята белой фигурой
+            // клетка справа занята чужой фигурой
             if(board->getCellBoard(i+1, coordYcell) == "White")
             {
                 availableSteps[coordYcell][i+1] = true;
                 break;
             }
-            // клетка справа занята черной фигурой
-            if(board->getCellBoard(i+1, coordYcell) == "Black")
+            // клетка справа занята своей фигурой
+            if(board->getCellBoard(i+1, coordYcell) == team)
                 break;
         }
         // вертикаль вверх
@@ -175,14 +175,14 @@ void Rook::calcSteps()
             {
                 availableSteps[i-1][coordXcell] = true;
             }
-            // клетка сверху занята белой фигурой
+            // клетка сверху занята чужой фигурой
             if(board->getCellBoard(coordXcell, i-1) == "White")
             {
                 availableSteps[i-1][coordXcell] = true;
                 break;
             }
-            // клетка сверху занята черной фигурой
-            if(board->getCellBoard(coordXcell, i-1) == "Black")
+            // клетка сверху занята своей фигурой
+            if(board->getCellBoard(coordXcell, i-1) == team)
                 break;
         }
         // вертикаль вниз
@@ -193,14 +193,14 @@ void Rook::calcSteps()
             {
                 availableSteps[i+1][coordXcell] = true;
             }
-            // клетка снизу занята белой фигурой
+            // клетка снизу занята чужой фигурой
             if(board->getCellBoard(coordXcell, i+1) == "White")
             {
                 availableSteps[i+1][coordXcell] = true;
                 break;
             }
-            // клетка снизу занята черной фигурой
-            if(board->getCellBoard(coordXcell, i+1) == "Black")
+            // клетка снизу занята своей фигурой
+            if(board->getCellBoard(coordXcell, i+1) == team)
                 break;
         }
     }

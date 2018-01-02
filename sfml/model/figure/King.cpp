@@ -46,5 +46,41 @@ std::shared_ptr<Figure> King::clone() const
 
 void King::calcSteps()
 {
+    Board* board = Board::Instance();
 
+    for (int i = 0; i < 8; i++)
+    for (int j = 0; j < 8; j++)
+        availableSteps[i][j] = false;
+    // шаг влево
+    if(coordXcell-1 >= 0)
+        if(board->getCellBoard(coordXcell-1, coordYcell) != team)
+            availableSteps[coordYcell][coordXcell-1] = true;
+    // шаг вправо
+    if(coordXcell+1 <= 7)
+        if(board->getCellBoard(coordXcell+1, coordYcell) != team)
+            availableSteps[coordYcell][coordXcell+1] = true;
+    // шаг вверх
+    if(coordYcell-1 >= 0)
+        if(board->getCellBoard(coordXcell, coordYcell-1) != team)
+            availableSteps[coordYcell-1][coordXcell] = true;
+    // шаг вниз
+    if(coordYcell+1 <= 7)
+        if(board->getCellBoard(coordXcell, coordYcell+1) != team)
+            availableSteps[coordYcell+1][coordXcell] = true;
+    // шаг северо-запад
+    if(coordXcell-1 >= 0 && coordYcell-1 >= 0)
+        if(board->getCellBoard(coordXcell-1, coordYcell-1) != team)
+            availableSteps[coordYcell-1][coordXcell-1] = true;
+    // шаг северо-восток
+    if(coordXcell+1 <= 7 && coordYcell-1 >= 0)
+        if(board->getCellBoard(coordXcell+1, coordYcell-1) != team)
+            availableSteps[coordYcell-1][coordXcell+1] = true;
+    // шаг юго-восток
+    if(coordXcell+1 <= 7 && coordYcell+1 <= 7)
+        if(board->getCellBoard(coordXcell+1, coordYcell+1) != team)
+            availableSteps[coordYcell+1][coordXcell+1] = true;
+    // шаг юго-запад
+    if(coordXcell-1 >= 0 && coordYcell+1 <= 7)
+        if(board->getCellBoard(coordXcell-1, coordYcell+1) != team)
+            availableSteps[coordYcell+1][coordXcell-1] = true;
 }

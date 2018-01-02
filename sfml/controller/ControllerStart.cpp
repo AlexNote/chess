@@ -32,6 +32,11 @@ bool ControllerStart::play(VectorOfFigures &figures)
         CaretakerFigure* caretakerFigure = CaretakerFigure::Instance();
         board->load(caretakerBoard->getBoardSave());
         figures.load(caretakerFigure->getFiguresSave());
+
+        for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+        {
+            (*iterFigure)->calcSteps();
+        }
     }
 
     return isGameStart;
