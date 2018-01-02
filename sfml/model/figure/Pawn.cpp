@@ -64,7 +64,16 @@ void Pawn::calcSteps()
 
 }
 
-bool Pawn::isFirstStep()
+void Pawn::isFirstStep()
 {
-    return firstStep;
+    if (team == "White"){
+        if (coordYcell == 6) // белая пешка еще не ходила
+            firstStep = true;
+        else firstStep = false;
+    }
+    if (team == "Black"){
+        if (coordYcell == 1) // черная пешка еще не ходила
+            firstStep = true;
+        else firstStep = false;
+    }
 }

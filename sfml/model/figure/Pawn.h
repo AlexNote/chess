@@ -6,13 +6,15 @@
 
 class Pawn : public Figure
 {
-    bool firstStep;
 public:
     Pawn(QString team, int x, int y);
     Pawn(const Pawn&copy);
     std::shared_ptr<Figure> clone() const;
     void calcSteps();
-    bool isFirstStep();
+
+private:
+    void isFirstStep();
+    bool firstStep;
 };
 
 #endif // PAWN_H
