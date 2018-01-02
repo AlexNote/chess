@@ -204,11 +204,4 @@ void Rook::calcSteps()
                 break;
         }
     }
-
-
-
-
-
-
-
 }
