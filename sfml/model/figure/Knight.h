@@ -11,6 +11,9 @@ public:
     Knight(const Knight& copy);
     std::shared_ptr<Figure> clone() const;
     void calcSteps();
+
+private:
+    QString type = "Knight";
 };
 
 #endif // KNIGHT_H

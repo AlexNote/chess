@@ -6,6 +6,7 @@
 #include <QVector>
 #include <memory>
 #include "MementoBoard.h"
+#include "VectorOfFigures.h"
 
 class Board {
 public:
@@ -16,6 +17,10 @@ public:
 
     void load(std::shared_ptr<MementoBoard> boardSave);
     std::shared_ptr<MementoBoard> save();
+
+    bool getWhiteBit(int x, int y);
+    bool getBlackBit(int x, int y);
+    void setBitCells(VectorOfFigures& figures);
 
 private:
     Board() = default;
@@ -36,30 +41,9 @@ private:
         {"White", "White", "White", "White", "White", "White", "White", "White"},
         {"White", "White", "White", "White", "White", "White", "White", "White"}
     };
-//    QString board[8][8] = {
-//        {"Black", "Black", "Black", "Black", "Black", "Black", "Black", "Black"},
-//        {"Black", "Black", "Black", "Black", "Black", "Black", "Black", "Black"},
-//        {"",      "",      "",      "",      "",      "",      "",      ""     },
-//        {"",      "",      "",      "",      "",      "",      "",      ""     },
-//        {"",      "",      "",      "",      "",      "",      "",      ""     },
-//        {"",      "",      "",      "",      "",      "",      "",      ""     },
-//        {"White", "White", "White", "White", "White", "White", "White", "White"},
-//        {"White", "White", "White", "White", "White", "White", "White", "White"} };
+
+    bool whiteBitCells[8][8];
+    bool blackBitCells[8][8];
 };
-
-
-
-//sf::String board[SIZE] = { // игровое поле
-//	"0000000000",
-//	"0ffffffff0",
-//	"0ffffffff0",
-//	"0ffffffff0",
-//	"0ffffffff0",
-//	"0ffffffff0",
-//	"0ffffffff0",
-//	"0ffffffff0",
-//	"0ffffffff0",
-//	"0000000000"
-//};
 
 #endif // BOARD_H

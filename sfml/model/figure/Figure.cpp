@@ -92,3 +92,8 @@ bool Figure::getAvailableStep(int x, int y)
     return availableSteps[y][x];
 }
 
+QVector<QVector<bool> > Figure::getAllSteps()
+{
+    return availableSteps;
+}
+

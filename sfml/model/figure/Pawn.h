@@ -14,6 +14,7 @@ public:
 
 private:
     bool isFirstStep();
+    QString type = "Pawn";
 };
 
 #endif // PAWN_H

@@ -11,6 +11,9 @@ public:
     Bishop(const Bishop&copy);
     std::shared_ptr<Figure> clone() const;
     void calcSteps();
+
+private:
+    QString type = "Bishop";
 };
 
 #endif // BISHOP_H

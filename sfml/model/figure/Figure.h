@@ -38,6 +38,7 @@ public:
     QString getTeam();
     virtual void calcSteps() = 0;
     bool getAvailableStep(int x, int y);
+    QVector< QVector<bool> > getAllSteps();
 protected:
     int coordXpx;
     int coordYpx;
@@ -45,7 +46,16 @@ protected:
     int coordYcell;
     int oldCoordXcell;
     int oldCoordYcell;
-    bool availableSteps[8][8] = {{false}};
+    QVector< QVector<bool> > availableSteps = {
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false}
+    };
     QString team;
     sf::Texture textureFigure;
     sf::Sprite spriteFigure;

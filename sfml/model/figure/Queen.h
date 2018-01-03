@@ -11,6 +11,9 @@ public:
     Queen(const Queen& copy);
     std::shared_ptr<Figure> clone() const;
     void calcSteps();
+
+private:
+    QString type = "Queen";
 };
 
 #endif // QUEEN_H

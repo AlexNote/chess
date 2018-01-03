@@ -84,3 +84,21 @@ void King::calcSteps()
         if(board->getCellBoard(coordXcell-1, coordYcell+1) != team)
             availableSteps[coordYcell+1][coordXcell-1] = true;
 }
+
+void King::setPositionCell(int cellX, int cellY)
+{
+    if (cellX != oldCoordXcell || cellY != oldCoordYcell) // король делает шаг на новую клетку
+    {
+        firstStep = false;
+    }
+    coordXcell = cellX;
+    coordYcell = cellY;
+    coordXpx = coordXcell*64 + 63;
+    coordYpx = coordYcell*64 + 63;
+    spriteFigure.setPosition(coordXpx, coordYpx);
+}
+
+bool King::isFirstStep()
+{
+    return firstStep;
+}
