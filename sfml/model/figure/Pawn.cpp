@@ -48,7 +48,11 @@ void Pawn::calcSteps() // формирование матрицы теорети
 {
     for (int i = 0; i < 8; i++)
     for (int j = 0; j < 8; j++)
+    {
         availableSteps[i][j] = false;
+        allBeatCells[i][j] = false;
+    }
+
 
     Board* board = Board::Instance();
 
@@ -58,18 +62,21 @@ void Pawn::calcSteps() // формирование матрицы теорети
         if (board->getCellBoard(coordXcell, coordYcell-1) == "")
         {
             availableSteps[coordYcell-1][coordXcell] = true;
+            allBeatCells[coordYcell-1][coordXcell] = false;
             if (isFirstStep()) // если это первый ход пешки
             {
                 // если две клетки перед пешкой свободны
                 if (board->getCellBoard(coordXcell, coordYcell-2) == "")
                 {
                     availableSteps[coordYcell-2][coordXcell] = true;
+                    allBeatCells[coordYcell-2][coordXcell] = false;
                 }
             }
         }
         //пешка с левого края
         if(coordXcell == 0)
         {
+            allBeatCells[coordYcell-1][coordXcell+1] = true;
             // пешка может забрать черную фигуру справа
             if(board->getCellBoard(coordXcell+1, coordYcell-1) == "Black")
             {
@@ -79,6 +86,7 @@ void Pawn::calcSteps() // формирование матрицы теорети
         //пешка с правого края
         if (coordXcell == 7)
         {
+            allBeatCells[coordYcell-1][coordXcell-1] = true;
             // пешка может забрать черную фигуру слева
             if(board->getCellBoard(coordXcell-1, coordYcell-1) == "Black")
             {
@@ -88,6 +96,8 @@ void Pawn::calcSteps() // формирование матрицы теорети
         //пешка не с краю
         if (coordXcell != 0 && coordXcell != 7)
         {
+            allBeatCells[coordYcell-1][coordXcell+1] = true;
+            allBeatCells[coordYcell-1][coordXcell-1] = true;
             // пешка может забрать черную фигуру справа
             if(board->getCellBoard(coordXcell+1, coordYcell-1) == "Black")
             {
@@ -107,18 +117,21 @@ void Pawn::calcSteps() // формирование матрицы теорети
         if (board->getCellBoard(coordXcell, coordYcell+1) == "")
         {
             availableSteps[coordYcell+1][coordXcell] = true;
+            allBeatCells[coordYcell+1][coordXcell] = false;
             if (isFirstStep()) // если это первый ход пешки
             {
                 // если две клетки перед пешкой свободны
                 if (board->getCellBoard(coordXcell, coordYcell+2) == "")
                 {
                     availableSteps[coordYcell+2][coordXcell] = true;
+                    allBeatCells[coordYcell+2][coordXcell] = false;
                 }
             }
         }
         //пешка с левого края
         if(coordXcell == 0)
         {
+            allBeatCells[coordYcell+1][coordXcell+1] = true;
             // пешка может забрать белую фигуру справа
             if(board->getCellBoard(coordXcell+1, coordYcell+1) == "White")
             {
@@ -128,6 +141,7 @@ void Pawn::calcSteps() // формирование матрицы теорети
         //пешка с правого края
         if (coordXcell == 7)
         {
+            allBeatCells[coordYcell+1][coordXcell-1] = true;
             // пешка может забрать белую фигуру слева
             if(board->getCellBoard(coordXcell-1, coordYcell+1) == "White")
             {
@@ -137,6 +151,8 @@ void Pawn::calcSteps() // формирование матрицы теорети
         //пешка не с краю
         if (coordXcell != 0 && coordXcell != 7)
         {
+            allBeatCells[coordYcell+1][coordXcell+1] = true;
+            allBeatCells[coordYcell+1][coordXcell-1] = true;
             // пешка может забрать белую фигуру справа
             if(board->getCellBoard(coordXcell+1, coordYcell+1) == "White")
             {
@@ -149,6 +165,11 @@ void Pawn::calcSteps() // формирование матрицы теорети
             }
         }
     }
+}
+
+QVector<QVector<bool> > Pawn::getAllBeatCells()
+{
+    return allBeatCells;
 }
 
 bool Pawn::isFirstStep()

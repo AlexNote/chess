@@ -11,7 +11,7 @@ public:
     Queen(const Queen& copy);
     std::shared_ptr<Figure> clone() const;
     void calcSteps();
-
+    QVector< QVector<bool> > getAllBeatCells();
 private:
     QString type = "Queen";
 };

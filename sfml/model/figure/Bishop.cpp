@@ -207,4 +207,10 @@ void Bishop::calcSteps()
                 break;
         }
     }
+    allBeatCells = availableSteps;
+}
+
+QVector<QVector<bool> > Bishop::getAllBeatCells()
+{
+    return allBeatCells;
 }

@@ -11,6 +11,7 @@ public:
     Bishop(const Bishop&copy);
     std::shared_ptr<Figure> clone() const;
     void calcSteps();
+    QVector< QVector<bool> > getAllBeatCells();
 
 private:
     QString type = "Bishop";

@@ -137,4 +137,10 @@ void Knight::calcSteps()
             }
         }
     }
+    allBeatCells = availableSteps;
+}
+
+QVector<QVector<bool> > Knight::getAllBeatCells()
+{
+    return allBeatCells;
 }

@@ -2,7 +2,6 @@
 #define FIGURE_H
 
 #include <QString>
-#include <QBitArray>
 #include <QVector>
 #include <SFML/Graphics.hpp>
 #include <memory>
@@ -39,6 +38,7 @@ public:
     virtual void calcSteps() = 0;
     bool getAvailableStep(int x, int y);
     QVector< QVector<bool> > getAllSteps();
+    virtual QVector< QVector<bool> > getAllBeatCells() = 0;
 protected:
     int coordXpx;
     int coordYpx;
@@ -47,6 +47,16 @@ protected:
     int oldCoordXcell;
     int oldCoordYcell;
     QVector< QVector<bool> > availableSteps = {
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false},
+        {false, false, false, false,  false,  false,  false,  false}
+    };
+    QVector< QVector<bool> > allBeatCells = {
         {false, false, false, false,  false,  false,  false,  false},
         {false, false, false, false,  false,  false,  false,  false},
         {false, false, false, false,  false,  false,  false,  false},

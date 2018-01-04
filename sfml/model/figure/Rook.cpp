@@ -204,20 +204,26 @@ void Rook::calcSteps()
                 break;
         }
     }
+    allBeatCells = availableSteps;
 }
 
-void Rook::setPositionCell(int cellX, int cellY)
+QVector<QVector<bool> > Rook::getAllBeatCells()
 {
-    if (cellX != oldCoordXcell || cellY != oldCoordYcell) // ладья делает шаг на новую клетку
-    {
-        firstStep = false;
-    }
-    coordXcell = cellX;
-    coordYcell = cellY;
-    coordXpx = coordXcell*64 + 63;
-    coordYpx = coordYcell*64 + 63;
-    spriteFigure.setPosition(coordXpx, coordYpx);
+    return allBeatCells;
 }
+
+//void Rook::setPositionCell(int cellX, int cellY)
+//{
+//    if (cellX != oldCoordXcell || cellY != oldCoordYcell) // ладья делает шаг на новую клетку
+//    {
+//        firstStep = false;
+//    }
+//    coordXcell = cellX;
+//    coordYcell = cellY;
+//    coordXpx = coordXcell*64 + 63;
+//    coordYpx = coordYcell*64 + 63;
+//    spriteFigure.setPosition(coordXpx, coordYpx);
+//}
 
 bool Rook::isFirstStep()
 {

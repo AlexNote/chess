@@ -3,6 +3,7 @@
 
 #include "Figure.h"
 #include <QString>
+#include "../VectorOfFigures.h"
 
 class King : public Figure
 {
@@ -12,6 +13,7 @@ public:
     std::shared_ptr<Figure> clone() const;
     void calcSteps();
     void setPositionCell(int cellX, int cellY); // установка игровой позиции по позиции курсора
+    QVector< QVector<bool> > getAllBeatCells();
 private:
     bool isFirstStep();
     bool firstStep = true;

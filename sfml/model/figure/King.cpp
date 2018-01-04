@@ -83,6 +83,12 @@ void King::calcSteps()
     if(coordXcell-1 >= 0 && coordYcell+1 <= 7)
         if(board->getCellBoard(coordXcell-1, coordYcell+1) != team)
             availableSteps[coordYcell+1][coordXcell-1] = true;
+    allBeatCells = availableSteps;
+}
+
+QVector<QVector<bool> > King::getAllBeatCells()
+{
+    return allBeatCells;
 }
 
 void King::setPositionCell(int cellX, int cellY)

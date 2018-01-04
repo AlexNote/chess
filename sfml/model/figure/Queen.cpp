@@ -349,4 +349,10 @@ void Queen::calcSteps()
                 break;
         }
     }
+    allBeatCells = availableSteps;
+}
+
+QVector<QVector<bool> > Queen::getAllBeatCells()
+{
+    return allBeatCells;
 }

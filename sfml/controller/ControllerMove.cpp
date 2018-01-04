@@ -125,7 +125,7 @@ void ControllerMove::takeFigure(VectorOfFigures& figures)
         (*iterFigure)->calcSteps();
     }
 
-    board->setBitCells(figures);
+    figures.setBeatCells();
 }
 
 ControllerMove::ControllerMove()

@@ -11,8 +11,8 @@ public:
     Rook(const Rook& copy);
     std::shared_ptr<Figure> clone() const;
     void calcSteps();
-    void setPositionCell(int cellX, int cellY); // установка игровой позиции по позиции курсора
-
+    //void setPositionCell(int cellX, int cellY); // установка игровой позиции по позиции курсора
+    QVector< QVector<bool> > getAllBeatCells();
 private:
     bool isFirstStep();
     bool firstStep = true;

@@ -11,8 +11,9 @@ public:
     Pawn(const Pawn&copy);
     std::shared_ptr<Figure> clone() const;
     void calcSteps();
-
+    QVector< QVector<bool> > getAllBeatCells();
 private:
+
     bool isFirstStep();
     QString type = "Pawn";
 };
