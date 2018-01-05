@@ -18,7 +18,7 @@ int main()
     VectorOfFigures figures;
     BtnStart btnStart;
 
-    ControllerMove controllerMove;
+    ControllerMove controllerMove = ControllerMove(figures);
     ControllerStart controllerStart;
    // ControllerTake controllerTake;
 
@@ -34,7 +34,7 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            if (controllerStart.play(figures))
+            if (controllerStart.play(figures, controllerMove))
             {
                 controllerMove.checkSelect(event, window, figures); // выбор фигуры
                // controllerTake.takeFigure(figures); // взятие фигуры
@@ -43,13 +43,13 @@ int main()
 
         }
 
-        if (controllerStart.play(figures))
+        if (controllerStart.play(figures, controllerMove))
             controllerMove.moving(); // движение фигуры
 
         window.clear();
         window.draw(board->getBoard());
 
-        if (controllerStart.play(figures))
+        if (controllerStart.play(figures, controllerMove))
             play.playGame(window, figures);
 
         else start.startGame(window, btnStart.getBtnStart());

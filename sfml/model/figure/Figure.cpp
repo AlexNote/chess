@@ -31,15 +31,6 @@ void Figure::setPositionCell()
     spriteFigure.setPosition(coordXpx, coordYpx);
 }
 
-void Figure::setPositionCell(int cellX, int cellY)
-{
-    coordXcell = cellX;
-    coordYcell = cellY;
-    coordXpx = coordXcell*64 + 63;
-    coordYpx = coordYcell*64 + 63;
-    spriteFigure.setPosition(coordXpx, coordYpx);
-}
-
 void Figure::setOldPositionCell()
 {
     oldCoordXcell = coordXcell;
@@ -87,6 +78,11 @@ QString Figure::getTeam()
     return team;
 }
 
+void Figure::setAvailableStep(int x, int y)
+{
+    availableSteps[y][x] = true;
+}
+
 bool Figure::getAvailableStep(int x, int y)
 {
     return availableSteps[y][x];
@@ -96,4 +92,3 @@ QVector<QVector<bool> > Figure::getAllSteps()
 {
     return availableSteps;
 }
-

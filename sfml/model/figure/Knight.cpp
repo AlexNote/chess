@@ -23,7 +23,7 @@ Knight::Knight(QString team, int x, int y)
     oldCoordYcell = coordYcell;
 }
 
-Knight::Knight(const Knight &copy)
+Knight::Knight(const Knight &copy) : Figure::Figure(copy)
 {
     team = copy.team;
     if (team == "White")
@@ -143,4 +143,23 @@ void Knight::calcSteps()
 QVector<QVector<bool> > Knight::getAllBeatCells()
 {
     return allBeatCells;
+}
+
+bool Knight::isFirstStep()
+{
+    return false;
+}
+
+QString Knight::getType()
+{
+    return type;
+}
+
+void Knight::setPositionCell(int cellX, int cellY)
+{
+    coordXcell = cellX;
+    coordYcell = cellY;
+    coordXpx = coordXcell*64 + 63;
+    coordYpx = coordYcell*64 + 63;
+    spriteFigure.setPosition(coordXpx, coordYpx);
 }

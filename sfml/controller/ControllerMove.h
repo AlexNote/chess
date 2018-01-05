@@ -15,14 +15,25 @@ private:
     //QList<Figure*>::iterator selectFigure = figures.getAllFigures().begin();
     //Figure* selectFigure;
     std::shared_ptr<Figure> selectFigure;
+    std::shared_ptr<Figure> castlingFigure = nullptr;
+    std::shared_ptr<Figure> whiteKing;
+    std::shared_ptr<Figure> blackKing;
     //QPointer<Figure*> selectFigure;
     sf::Vector2i cursorPos; // координаты курсора мыши
     int cursorCellX;
     int cursorCellY;
     void takeFigure(VectorOfFigures& figures);
+    bool rollback;
 
+    bool whiteBeatCells[8][8];
+    bool blackBeatCells[8][8];
 public:
-    ControllerMove();
+    bool getWhiteBeat(int x, int y);
+    bool getBlackBeat(int x, int y);
+    void setBeatCells(VectorOfFigures& figures);
+
+    ControllerMove(VectorOfFigures& figures);
+    void setKings(VectorOfFigures& figures);
     void checkSelect(sf::Event& event, sf::RenderWindow& window, VectorOfFigures& figures);
     void moving();
 

@@ -20,8 +20,9 @@ private:
     //std::vector<Figure*> allFigures;
     std::vector< std::shared_ptr<Figure> > allFigures;
     QString currentStep; // какая команда делает текущий ход
-    bool whiteBeatCells[8][8];
-    bool blackBeatCells[8][8];
+    bool whiteCheck;
+    bool blackCheck;
+
 public:
     VectorOfFigures();
     //void create();
@@ -32,13 +33,13 @@ public:
     QString getCurrentStep();
     void setCurrentStep(QString curStep);
 
+    void setWhiteCheck(bool state);
+    void setBlackCheck(bool state);
+    bool getWhiteCheck();
+    bool getBlackCheck();
+
     std::shared_ptr<MementoFigures> save();
     void load(const std::shared_ptr<MementoFigures> figuresSave);
-
-
-    bool getWhiteBeat(int x, int y);
-    bool getBlackBeat(int x, int y);
-    void setBeatCells();
 };
 
 #endif // VECTOROFFIGURES_H

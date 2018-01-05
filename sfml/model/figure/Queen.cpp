@@ -23,7 +23,7 @@ Queen::Queen(QString team, int x, int y)
     oldCoordYcell = coordYcell;
 }
 
-Queen::Queen(const Queen &copy)
+Queen::Queen(const Queen &copy) : Figure::Figure(copy)
 {
     team = copy.team;
     if (team == "White")
@@ -355,4 +355,23 @@ void Queen::calcSteps()
 QVector<QVector<bool> > Queen::getAllBeatCells()
 {
     return allBeatCells;
+}
+
+bool Queen::isFirstStep()
+{
+    return false;
+}
+
+QString Queen::getType()
+{
+    return type;
+}
+
+void Queen::setPositionCell(int cellX, int cellY)
+{
+    coordXcell = cellX;
+    coordYcell = cellY;
+    coordXpx = coordXcell*64 + 63;
+    coordYpx = coordYcell*64 + 63;
+    spriteFigure.setPosition(coordXpx, coordYpx);
 }

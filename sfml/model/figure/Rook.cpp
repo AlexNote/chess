@@ -23,9 +23,10 @@ Rook::Rook(QString team, int x, int y)
     oldCoordYcell = coordYcell;
 }
 
-Rook::Rook(const Rook &copy)
+Rook::Rook(const Rook &copy) : Figure::Figure(copy)
 {
     team = copy.team;
+    firstStep = copy.firstStep;
     if (team == "White")
     {
         spriteFigure.setTextureRect(sf::IntRect(128, 64, 64, 64));
@@ -212,18 +213,23 @@ QVector<QVector<bool> > Rook::getAllBeatCells()
     return allBeatCells;
 }
 
-//void Rook::setPositionCell(int cellX, int cellY)
-//{
-//    if (cellX != oldCoordXcell || cellY != oldCoordYcell) // ладья делает шаг на новую клетку
-//    {
-//        firstStep = false;
-//    }
-//    coordXcell = cellX;
-//    coordYcell = cellY;
-//    coordXpx = coordXcell*64 + 63;
-//    coordYpx = coordYcell*64 + 63;
-//    spriteFigure.setPosition(coordXpx, coordYpx);
-//}
+QString Rook::getType()
+{
+    return type;
+}
+
+void Rook::setPositionCell(int cellX, int cellY)
+{
+    if (cellX != oldCoordXcell || cellY != oldCoordYcell) // ладья делает шаг на новую клетку
+    {
+        firstStep = false;
+    }
+    coordXcell = cellX;
+    coordYcell = cellY;
+    coordXpx = coordXcell*64 + 63;
+    coordYpx = coordYcell*64 + 63;
+    spriteFigure.setPosition(coordXpx, coordYpx);
+}
 
 bool Rook::isFirstStep()
 {

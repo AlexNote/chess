@@ -20,7 +20,7 @@ void ControllerStart::pushBtn(sf::RenderWindow& window, sf::Event& event, BtnSta
     }
 }
 
-bool ControllerStart::play(VectorOfFigures &figures)
+bool ControllerStart::play(VectorOfFigures &figures, ControllerMove &controllerMove)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         isGameStart = false;
@@ -37,6 +37,8 @@ bool ControllerStart::play(VectorOfFigures &figures)
         {
             (*iterFigure)->calcSteps();
         }
+        controllerMove.setKings(figures);
+
     }
 
     return isGameStart;

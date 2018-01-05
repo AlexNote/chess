@@ -7,6 +7,7 @@
 #include "../model/Board.h"
 #include "../model/CaretakerBoard.h"
 #include "../model/CaretakerFigure.h"
+#include "ControllerMove.h"
 
 class ControllerStart
 {
@@ -17,7 +18,7 @@ public:
     ControllerStart();
     void pushBtn(sf::RenderWindow& window, sf::Event& event, BtnStart& btnStart);
 
-    bool play(VectorOfFigures& figures);
+    bool play(VectorOfFigures& figures, ControllerMove &controllerMove);
 };
 
 #endif // CONTROLLERSTART_H

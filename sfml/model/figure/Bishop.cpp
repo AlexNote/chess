@@ -23,7 +23,7 @@ Bishop::Bishop(QString team, int x, int y)
     oldCoordYcell = coordYcell;
 }
 
-Bishop::Bishop(const Bishop &copy)
+Bishop::Bishop(const Bishop &copy) : Figure::Figure(copy)
 {
     team = copy.team;
     if (team == "White")
@@ -213,4 +213,23 @@ void Bishop::calcSteps()
 QVector<QVector<bool> > Bishop::getAllBeatCells()
 {
     return allBeatCells;
+}
+
+bool Bishop::isFirstStep()
+{
+    return false;
+}
+
+QString Bishop::getType()
+{
+    return type;
+}
+
+void Bishop::setPositionCell(int cellX, int cellY)
+{
+    coordXcell = cellX;
+    coordYcell = cellY;
+    coordXpx = coordXcell*64 + 63;
+    coordYpx = coordYcell*64 + 63;
+    spriteFigure.setPosition(coordXpx, coordYpx);
 }

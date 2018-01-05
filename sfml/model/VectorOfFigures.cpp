@@ -1,5 +1,6 @@
 #include "VectorOfFigures.h"
 #include <QDebug>
+
 VectorOfFigures::VectorOfFigures()
 {
     /// белые фигуры
@@ -34,6 +35,8 @@ VectorOfFigures::VectorOfFigures()
     }
 
     currentStep = "White";
+    whiteCheck = false;
+    blackCheck = false;
 }
 
 //void VectorOfFigures::create()
@@ -89,6 +92,26 @@ void VectorOfFigures::setCurrentStep(QString curStep)
     currentStep = curStep;
 }
 
+void VectorOfFigures::setWhiteCheck(bool state)
+{
+    whiteCheck = state;
+}
+
+void VectorOfFigures::setBlackCheck(bool state)
+{
+    blackCheck = state;
+}
+
+bool VectorOfFigures::getWhiteCheck()
+{
+    return whiteCheck;
+}
+
+bool VectorOfFigures::getBlackCheck()
+{
+    return blackCheck;
+}
+
 std::shared_ptr<MementoFigures> VectorOfFigures::save()
 {
     size_t size = allFigures.size();
@@ -108,55 +131,4 @@ void VectorOfFigures::load(const std::shared_ptr<MementoFigures> figuresSave)
 
     allFigures.swap(tmpVec);
     currentStep = figuresSave->getCurrentStep();
-}
-
-bool VectorOfFigures::getWhiteBeat(int x, int y)
-{
-    return whiteBeatCells[y][x];
-}
-
-bool VectorOfFigures::getBlackBeat(int x, int y)
-{
-    return blackBeatCells[y][x];
-}
-
-void VectorOfFigures::setBeatCells()
-{
-    for (int i = 0; i < 8; i++)
-    for (int j = 0; j < 8; j++)
-    {
-        whiteBeatCells[i][j] = false;
-        blackBeatCells[i][j] = false;
-    }
-
-    // просмотр всех фигур на доске
-    for (auto iterFigure = allFigures.begin(); iterFigure != allFigures.end(); ++iterFigure)
-    {
-        QVector<QVector<bool> > BeatCells = (*iterFigure)->getAllBeatCells();
-        // текущая фигура принадлежит белой команде
-        if ((*iterFigure)->getTeam() == "White")
-        {
-            for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
-            {
-                if (BeatCells[i][j])
-                    whiteBeatCells[i][j] = BeatCells[i][j];
-            }
-        }
-        // текущая фигура принадлежит черной команде
-        else
-        {
-            for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
-            {
-                if (BeatCells[i][j])
-                    blackBeatCells[i][j] = BeatCells[i][j];
-            }
-        }
-    }
-//    qDebug() << "allBeat:";
-//    for (int i = 0; i < 8; i++)
-//      for (int j = 0; j < 8; j++)
-//        qDebug() << "whiteBeatCells " << "[" << i << "]" << "[" << j << "]: " << whiteBeatCells[i][j];
-//    qDebug() << "\n";
 }

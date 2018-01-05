@@ -22,7 +22,7 @@ Pawn::Pawn(QString team, int x, int y)
     oldCoordYcell = coordYcell;
 }
 
-Pawn::Pawn(const Pawn &copy)
+Pawn::Pawn(const Pawn &copy) : Figure::Figure(copy)
 {
     team = copy.team;
     if (team == "White")
@@ -172,6 +172,20 @@ QVector<QVector<bool> > Pawn::getAllBeatCells()
     return allBeatCells;
 }
 
+QString Pawn::getType()
+{
+    return type;
+}
+
+void Pawn::setPositionCell(int cellX, int cellY)
+{
+    coordXcell = cellX;
+    coordYcell = cellY;
+    coordXpx = coordXcell*64 + 63;
+    coordYpx = coordYcell*64 + 63;
+    spriteFigure.setPosition(coordXpx, coordYpx);
+}
+
 bool Pawn::isFirstStep()
 {
     if (team == "White"){
@@ -184,4 +198,5 @@ bool Pawn::isFirstStep()
             return true;
         else return false;
     }
+    return false;
 }

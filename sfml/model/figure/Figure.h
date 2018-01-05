@@ -26,7 +26,7 @@ public:
     sf::Sprite getFigure();
     void setPositionPixel(int x, int y);
     void setPositionCell(); // установка игровой позиции по позиции курсора
-    void setPositionCell(int cellX, int cellY); // установка игровой позиции по позиции курсора
+    virtual void setPositionCell(int cellX, int cellY) = 0; // установка игровой позиции по позиции курсора
     void setOldPositionCell();
     void setCells(int x, int y); // установка игровой позиции по отношению к кординатам фигуры
     sf::Vector2f getPosition();
@@ -35,10 +35,13 @@ public:
     int getOldXcell();
     int getOldYcell();
     QString getTeam();
+    virtual void setAvailableStep(int x, int y);
     virtual void calcSteps() = 0;
     bool getAvailableStep(int x, int y);
     QVector< QVector<bool> > getAllSteps();
     virtual QVector< QVector<bool> > getAllBeatCells() = 0;
+    virtual QString getType() = 0;
+    virtual bool isFirstStep() = 0;
 protected:
     int coordXpx;
     int coordYpx;

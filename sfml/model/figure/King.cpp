@@ -23,9 +23,10 @@ King::King(QString team, int x, int y)
     oldCoordYcell = coordYcell;
 }
 
-King::King(const King &copy)
+King::King(const King &copy) : Figure::Figure(copy)
 {
     team = copy.team;
+    firstStep = copy.firstStep;
     if (team == "White")
     {
         spriteFigure.setTextureRect(sf::IntRect(0, 64, 64, 64));
@@ -89,6 +90,11 @@ void King::calcSteps()
 QVector<QVector<bool> > King::getAllBeatCells()
 {
     return allBeatCells;
+}
+
+QString King::getType()
+{
+    return type;
 }
 
 void King::setPositionCell(int cellX, int cellY)

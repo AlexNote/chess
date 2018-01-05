@@ -12,6 +12,9 @@ public:
     std::shared_ptr<Figure> clone() const;
     void calcSteps();
     QVector< QVector<bool> > getAllBeatCells();
+    bool isFirstStep();
+    QString getType();
+    void setPositionCell(int cellX, int cellY);
 private:
     QString type = "Queen";
 };
