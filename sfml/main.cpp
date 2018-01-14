@@ -7,13 +7,17 @@
 
 #include "controller/ControllerMove.h"
 #include "controller/ControllerStart.h"
-#include "controller/ControllerTake.h"
+#include "controller/ControllerChange.h"
 #include <iostream>
 
 int main()
 {
     sf::RenderWindow window;//(sf::VideoMode(572, 572), "Chess");
-    window.create(sf::VideoMode(572, 572), "Chess", sf::Style::Titlebar|sf::Style::Close);
+
+    window.create(sf::VideoMode(572, 572), "Super Chess", sf::Style::Titlebar|sf::Style::Close);
+    sf::Image icon;
+    icon.loadFromFile("ChessIcon.png");
+    window.setIcon(64, 64, icon.getPixelsPtr());
     Board* board = Board::Instance();
     VectorOfFigures figures;
     BtnStart btnStart;

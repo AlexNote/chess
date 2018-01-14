@@ -22,7 +22,6 @@ public:
     Figure();
     Figure(const Figure&);
     virtual std::shared_ptr<Figure> clone() const = 0;
-    //std::shared_ptr<Figure> clone() const;
     sf::Sprite getFigure();
     void setPositionPixel(int x, int y);
     void setPositionCell(); // установка игровой позиции по позиции курсора

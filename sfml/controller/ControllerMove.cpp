@@ -276,6 +276,7 @@ void ControllerMove::takeFigure(VectorOfFigures& figures)
         }
         setKings(figures);
     }
+    else figures.incCountSteps();
 
 
 

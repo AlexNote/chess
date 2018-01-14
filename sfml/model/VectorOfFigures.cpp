@@ -37,6 +37,30 @@ VectorOfFigures::VectorOfFigures()
     currentStep = "White";
     whiteCheck = false;
     blackCheck = false;
+    countSteps = 0;
+
+    textureChangeFigures.loadFromFile("figures.png");
+    whiteSpriteChange.setTexture(textureChangeFigures);
+    blackSpriteChange.setTexture(textureChangeFigures);
+
+    whiteSpriteChange.setTextureRect(sf::IntRect(64, 64, 256, 64));
+    blackSpriteChange.setTextureRect(sf::IntRect(64, 0, 256, 64));
+
+    whiteSpriteChange.setOrigin(128, 32);
+    blackSpriteChange.setOrigin(128, 32);
+
+    whiteSpriteChange.setPosition(286, 286);
+    blackSpriteChange.setPosition(286, 286);
+}
+
+void VectorOfFigures::incCountSteps()
+{
+    countSteps++;
+}
+
+int VectorOfFigures::getCountSteps()
+{
+    return countSteps;
 }
 
 //void VectorOfFigures::create()
@@ -90,6 +114,16 @@ QString VectorOfFigures::getCurrentStep()
 void VectorOfFigures::setCurrentStep(QString curStep)
 {
     currentStep = curStep;
+}
+
+sf::Sprite VectorOfFigures::getChahgeWhite()
+{
+    return whiteSpriteChange;
+}
+
+sf::Sprite VectorOfFigures::getChahgeBlack()
+{
+    return blackSpriteChange;
 }
 
 void VectorOfFigures::setWhiteCheck(bool state)

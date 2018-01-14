@@ -22,16 +22,25 @@ private:
     QString currentStep; // какая команда делает текущий ход
     bool whiteCheck;
     bool blackCheck;
+    int countSteps;
 
+    sf::Texture textureChangeFigures;
+    sf::Sprite whiteSpriteChange;
+    sf::Sprite blackSpriteChange;
 public:
     VectorOfFigures();
     //void create();
     //QList<Figure*> getAllFigures();
     //std::vector<Figure*> getAllFigures();
+    void incCountSteps();
+    int getCountSteps();
     std::vector< std::shared_ptr<Figure> >& getAllFigures();
     void replaceBack(int currentPosition);
     QString getCurrentStep();
     void setCurrentStep(QString curStep);
+
+    sf::Sprite getChahgeWhite();
+    sf::Sprite getChahgeBlack();
 
     void setWhiteCheck(bool state);
     void setBlackCheck(bool state);

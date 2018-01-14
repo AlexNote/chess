@@ -7,7 +7,6 @@
 #include <memory>
 #include "MementoBoard.h"
 
-
 class Board {
 public:
     static Board* Instance();

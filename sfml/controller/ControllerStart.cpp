@@ -27,18 +27,20 @@ bool ControllerStart::play(VectorOfFigures &figures, ControllerMove &controllerM
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace))
     {
-        Board* board = Board::Instance();
-        CaretakerBoard* caretakerBoard = CaretakerBoard::Instance();
-        CaretakerFigure* caretakerFigure = CaretakerFigure::Instance();
-        board->load(caretakerBoard->getBoardSave());
-        figures.load(caretakerFigure->getFiguresSave());
-
-        for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+        if (figures.getCountSteps() > 0)
         {
-            (*iterFigure)->calcSteps();
-        }
-        controllerMove.setKings(figures);
+            Board* board = Board::Instance();
+            CaretakerBoard* caretakerBoard = CaretakerBoard::Instance();
+            CaretakerFigure* caretakerFigure = CaretakerFigure::Instance();
+            board->load(caretakerBoard->getBoardSave());
+            figures.load(caretakerFigure->getFiguresSave());
 
+            for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+            {
+                (*iterFigure)->calcSteps();
+            }
+            controllerMove.setKings(figures);
+        }
     }
 
     return isGameStart;

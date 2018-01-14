@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-CONFIG += console c++11
-#greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core
+CONFIG += c++11 console
+
 
 LIBS += -L"C:/libs/SFML-2.4.2-build/lib"
 
@@ -16,8 +16,10 @@ CONFIG(debug, debug|release): LIBS += -lsfml-audio-d -lsfml-graphics-d -lsfml-ma
 INCLUDEPATH += C:/libs/SFML-2.4.2/include
 DEPENDPATH += C:/libs/SFML-2.4.2/include
 
-TARGET = sfml
+TARGET = "Super Chess"
 TEMPLATE = app
+
+VERSION = 1.0
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -46,11 +48,12 @@ SOURCES += main.cpp \
     model/BtnStart.cpp \
     controller/ControllerStart.cpp \
     model/VectorOfFigures.cpp \
-    controller/ControllerTake.cpp \
     model/MementoFigures.cpp \
     model/MementoBoard.cpp \
     model/CaretakerBoard.cpp \
-    model/CaretakerFigure.cpp
+    model/CaretakerFigure.cpp \
+    controller/ControllerChange.cpp \
+    model/ChangeFigures.cpp
 
 HEADERS += \
     model/figure/King.h \
@@ -67,8 +70,16 @@ HEADERS += \
     model/BtnStart.h \
     controller/ControllerStart.h \
     model/VectorOfFigures.h \
-    controller/ControllerTake.h \
     model/MementoFigures.h \
     model/MementoBoard.h \
     model/CaretakerBoard.h \
-    model/CaretakerFigure.h
+    model/CaretakerFigure.h \
+    controller/ControllerChange.h \
+    model/ChangeFigures.h
+
+win32 {
+    RC_FILE = chess.rc
+}
+
+DISTFILES += \
+    chess.rc

@@ -8,15 +8,6 @@ Board* Board::Instance() {
         _instance = new Board();
         _instance->textureBoard.loadFromFile("board.jpg");
         _instance->spriteBoard.setTexture(_instance->textureBoard);
-//        _instance->board = {
-//            {"Black", "Black", "Black", "Black", "Black", "Black", "Black", "Black"},
-//            {"Black", "Black", "Black", "Black", "Black", "Black", "Black", "Black"},
-//            {"",      "",      "",      "",      "",      "",      "",      ""     },
-//            {"",      "",      "",      "",      "",      "",      "",      ""     },
-//            {"",      "",      "",      "",      "",      "",      "",      ""     },
-//            {"",      "",      "",      "",      "",      "",      "",      ""     },
-//            {"White", "White", "White", "White", "White", "White", "White", "White"},
-//            {"White", "White", "White", "White", "White", "White", "White", "White"} };
     }
     return _instance;
 }

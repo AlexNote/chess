@@ -7,6 +7,7 @@ void ViewPlay::playGame(sf::RenderWindow& window, VectorOfFigures &figures)
     {
         window.draw((*iterFigure)->getFigure());
     }
+    //window.draw(figures.getChahgeWhite());
 
 //    for (int i = 0; i < figures.size(); ++i)
 //    {
