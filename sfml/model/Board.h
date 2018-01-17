@@ -17,6 +17,7 @@ public:
     void load(std::shared_ptr<MementoBoard> boardSave);
     std::shared_ptr<MementoBoard> save();
 
+    void SHOWBOARD();
 private:
     Board() = default;
     ~Board() = default;

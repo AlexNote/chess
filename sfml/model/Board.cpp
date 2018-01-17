@@ -1,5 +1,5 @@
 #include "Board.h"
-
+#include <QDebug>
 Board* Board::_instance = 0;
 
 Board* Board::Instance() {
@@ -35,6 +35,15 @@ void Board::load(std::shared_ptr<MementoBoard> boardSave)
 std::shared_ptr<MementoBoard> Board::save()
 {
     return std::shared_ptr<MementoBoard>(new MementoBoard(board));
+}
+
+void Board::SHOWBOARD()
+{
+    for (int i = 0; i < 8; i++)
+    {
+        qDebug() << board[i][0] << " " << board[i][1] << " " << board[i][2] << " " << board[i][3] << " " << board[i][4] << " " << board[i][5] << " " << board[i][6] << " " << board[i][7];
+    }
+    qDebug() << "\n";
 }
 
 

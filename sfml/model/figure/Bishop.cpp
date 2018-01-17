@@ -26,6 +26,8 @@ Bishop::Bishop(QString team, int x, int y)
 Bishop::Bishop(const Bishop &copy) : Figure::Figure(copy)
 {
     team = copy.team;
+    availableSteps = copy.availableSteps;
+    allBeatCells = copy.allBeatCells;
     if (team == "White")
     {
         spriteFigure.setTextureRect(sf::IntRect(256, 64, 64, 64));

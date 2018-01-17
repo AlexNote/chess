@@ -34,7 +34,8 @@ public:
     int getOldXcell();
     int getOldYcell();
     QString getTeam();
-    virtual void setAvailableStep(int x, int y);
+    void setAvailableStep(int x, int y);
+    void setBeatCell(int x, int y);
     virtual void calcSteps() = 0;
     bool getAvailableStep(int x, int y);
     QVector< QVector<bool> > getAllSteps();

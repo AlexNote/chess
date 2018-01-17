@@ -18,6 +18,10 @@ private:
     std::shared_ptr<Figure> castlingFigure = nullptr;
     std::shared_ptr<Figure> whiteKing;
     std::shared_ptr<Figure> blackKing;
+    std::shared_ptr<Figure> pawnEnPassant; // пешка, которую берут на проходе
+    //bool enPassant = false;
+    int enPassantX;
+    int enPassantY;
     //QPointer<Figure*> selectFigure;
     sf::Vector2i cursorPos; // координаты курсора мыши
     int cursorCellX;
@@ -31,6 +35,7 @@ public:
     bool getWhiteBeat(int x, int y);
     bool getBlackBeat(int x, int y);
     void setBeatCells(VectorOfFigures& figures);
+    void enPassant(QString &team, VectorOfFigures& figures); // проверка на взятие на проходе
 
     ControllerMove(VectorOfFigures& figures);
     void setKings(VectorOfFigures& figures);

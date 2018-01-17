@@ -27,6 +27,8 @@ Rook::Rook(const Rook &copy) : Figure::Figure(copy)
 {
     team = copy.team;
     firstStep = copy.firstStep;
+    availableSteps = copy.availableSteps;
+    allBeatCells = copy.allBeatCells;
     if (team == "White")
     {
         spriteFigure.setTextureRect(sf::IntRect(128, 64, 64, 64));

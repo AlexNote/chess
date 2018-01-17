@@ -23,6 +23,8 @@ private:
     bool whiteCheck;
     bool blackCheck;
     int countSteps;
+    bool enPassant = false;
+
 
     sf::Texture textureChangeFigures;
     sf::Sprite whiteSpriteChange;
@@ -46,6 +48,8 @@ public:
     void setBlackCheck(bool state);
     bool getWhiteCheck();
     bool getBlackCheck();
+    void setEnPassant(bool enPas);
+    bool getEnPassant();
 
     std::shared_ptr<MementoFigures> save();
     void load(const std::shared_ptr<MementoFigures> figuresSave);

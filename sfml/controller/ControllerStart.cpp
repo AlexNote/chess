@@ -35,10 +35,10 @@ bool ControllerStart::play(VectorOfFigures &figures, ControllerMove &controllerM
             board->load(caretakerBoard->getBoardSave());
             figures.load(caretakerFigure->getFiguresSave());
 
-            for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
-            {
-                (*iterFigure)->calcSteps();
-            }
+//            for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+//            {
+//                (*iterFigure)->calcSteps();
+//            }
             controllerMove.setKings(figures);
         }
     }

@@ -74,9 +74,11 @@ void ControllerMove::takeFigure(VectorOfFigures& figures)
     int newPosY = selectFigure->getYcell();
     QString team = selectFigure->getTeam();
     bool differents = false;
+    bool findEnPassant = false;
     if (selectFigure->getPosition().x < 30 || selectFigure->getPosition().y < 30 || selectFigure->getPosition().x > 542 || selectFigure->getPosition().y > 542)
     {
         selectFigure->setPositionCell(oldPosX, oldPosY);
+        return;
     }
     else if ( (oldPosX != newPosX) || (oldPosY != newPosY) ) // фигура была передвинута
     {
@@ -177,6 +179,68 @@ void ControllerMove::takeFigure(VectorOfFigures& figures)
         {
             if (board->getCellBoard(newPosX, newPosY) == "") // клетка свободна
             {
+                // если взятие на проходе возможно
+                if (figures.getEnPassant())
+                {
+                    // если ходит пешка
+                    if (selectFigure->getType() == "Pawn")
+                    {
+                        // если совершает взятие на проходе
+                        if (newPosX == enPassantX && newPosY == enPassantY)
+                        {
+                            size_t iterFigure = 0;
+                            size_t size = figures.getAllFigures().size();
+
+                            if (team == "Black")
+                            {
+                                // нахождение местоположения забираемой на проходе пешки
+                                for (iterFigure = 0, size = figures.getAllFigures().size() ; iterFigure < size; iterFigure++)
+                                {
+                                    int takenX = figures.getAllFigures()[iterFigure]->getXcell();
+                                    int takenY = figures.getAllFigures()[iterFigure]->getYcell();
+                                    if ( (enPassantX == takenX) && (enPassantY-1 == takenY) ) // найдена забиаемая фигура
+                                    {
+                                        findEnPassant = true;
+                                        break;
+                                    }
+                                }
+                                if (findEnPassant) // забрать фигуру. удалить её из вектора фигур
+                                {
+                                    figures.getAllFigures().erase(figures.getAllFigures().begin()+iterFigure); // удалить фигуру iterFigure
+//                                    board->setCellBoard(oldPosX, oldPosY, "");
+//                                    board->setCellBoard(newPosX, newPosY, team);
+                                    board->setCellBoard(newPosX, newPosY-1, "");
+                                    //selectFigure->setPositionCell(newPosX, newPosY);
+                                    //figures.setCurrentStep("White");
+                                }
+                            }
+                            else
+                            {
+                                // нахождение местоположения забираемой на проходе пешки
+                                for (iterFigure = 0, size = figures.getAllFigures().size() ; iterFigure < size; iterFigure++)
+                                {
+                                    int takenX = figures.getAllFigures()[iterFigure]->getXcell();
+                                    int takenY = figures.getAllFigures()[iterFigure]->getYcell();
+                                    if ( (enPassantX == takenX) && (enPassantY+1 == takenY) ) // найдена забиаемая фигура
+                                    {
+                                        findEnPassant = true;
+                                        break;
+                                    }
+                                }
+                                if (findEnPassant) // забрать фигуру. удалить её из вектора фигур
+                                {
+                                    figures.getAllFigures().erase(figures.getAllFigures().begin()+iterFigure); // удалить фигуру iterFigure
+//                                    board->setCellBoard(oldPosX, oldPosY, "");
+//                                    board->setCellBoard(newPosX, newPosY, team);
+                                    board->setCellBoard(newPosX, newPosY+1, "");
+                                    //selectFigure->setPositionCell(newPosX, newPosY);
+                                    //figures.setCurrentStep("White");
+                                }
+                            }
+                        }
+                    }
+                }
+
                 // если это рокировка
                 if (castlingFigure != nullptr)
                 {
@@ -208,6 +272,7 @@ void ControllerMove::takeFigure(VectorOfFigures& figures)
             else if (board->getCellBoard(newPosX, newPosY) == team) // клетка занята своей фигурой. поставить обратно
             {
                 selectFigure->setPositionCell(oldPosX, oldPosY);
+                return;
             }
             else // клетка занята чужой фигурой. найти эту фигуру в векторе
             {
@@ -236,13 +301,15 @@ void ControllerMove::takeFigure(VectorOfFigures& figures)
         else
         {
             selectFigure->setPositionCell(oldPosX, oldPosY);
+            return;
+        }
+        for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+        {
+            (*iterFigure)->calcSteps();
         }
     }
 
-    for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
-    {
-        (*iterFigure)->calcSteps();
-    }
+
     // установка битых клеток для каждой команды
     setBeatCells(figures);
     // установка значений шахов королей
@@ -277,9 +344,8 @@ void ControllerMove::takeFigure(VectorOfFigures& figures)
         setKings(figures);
     }
     else figures.incCountSteps();
-
-
-
+    enPassant(team, figures);
+    board->SHOWBOARD();
 }
 
 ControllerMove::ControllerMove(VectorOfFigures& figures)
@@ -342,6 +408,240 @@ void ControllerMove::setBeatCells(VectorOfFigures &figures)
 //      for (int j = 0; j < 8; j++)
 //        qDebug() << "whiteBeatCells " << "[" << i << "]" << "[" << j << "]: " << whiteBeatCells[i][j];
     //    qDebug() << "\n";
+}
+
+void ControllerMove::enPassant(QString &team, VectorOfFigures& figures)
+{
+    Board* board = Board::Instance();
+
+    if (selectFigure->getType() == "Pawn")
+    {
+        pawnEnPassant = selectFigure;
+        // ходили белые
+        if (team == "White")
+        {
+            // пешка совершила длинный шаг
+            if (pawnEnPassant->getYcell() == 4 && pawnEnPassant->getOldYcell() == 6)
+            {
+                // пешка стоит с левого края
+                if (pawnEnPassant->getXcell() == 0)
+                {
+                    // есть ли справа от нее черная фигура
+                    if (board->getCellBoard(pawnEnPassant->getXcell()+1, pawnEnPassant->getYcell()) == "Black")
+                    {
+                        // является ли эта фигура пешкой
+                        for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+                        {
+                            // нашли фигуру
+                            if ((*iterFigure)->getXcell() == pawnEnPassant->getXcell()+1 &&
+                                    (*iterFigure)->getYcell() == pawnEnPassant->getYcell())
+                            {
+                                // если это пешка
+                                if ((*iterFigure)->getType() == "Pawn")
+                                {
+                                    figures.setEnPassant(true);
+                                    enPassantX = pawnEnPassant->getXcell();
+                                    enPassantY = pawnEnPassant->getYcell() + 1;
+                                    (*iterFigure)->setAvailableStep(enPassantX, enPassantY);
+                                    break;
+                                }
+                                else break;
+                            }
+                        }
+                    }
+                }
+                // пешка стоит с правого края
+                else if (pawnEnPassant->getXcell() == 7)
+                {
+                    // есть ли слева от нее черная фигура
+                    if (board->getCellBoard(pawnEnPassant->getXcell()-1, pawnEnPassant->getYcell()) == "Black")
+                    {
+                        // является ли эта фигура пешкой
+                        for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+                        {
+                            // нашли фигуру
+                            if ((*iterFigure)->getXcell() == pawnEnPassant->getXcell()-1 &&
+                                    (*iterFigure)->getYcell() == pawnEnPassant->getYcell())
+                            {
+                                // если это пешка
+                                if ((*iterFigure)->getType() == "Pawn")
+                                {
+                                    figures.setEnPassant(true);// enPassant = true;
+                                    enPassantX = pawnEnPassant->getXcell();
+                                    enPassantY = pawnEnPassant->getYcell() + 1;
+                                    (*iterFigure)->setAvailableStep(enPassantX, enPassantY);
+                                    break;
+                                }
+                                else break;
+                            }
+                        }
+                    }
+                }
+                // пешка не с краю
+                else
+                {
+                    // есть ли справа от нее черная фигура
+                    if (board->getCellBoard(pawnEnPassant->getXcell()+1, pawnEnPassant->getYcell()) == "Black")
+                    {
+                        // является ли эта фигура пешкой
+                        for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+                        {
+                            // нашли фигуру
+                            if ((*iterFigure)->getXcell() == pawnEnPassant->getXcell()+1 &&
+                                    (*iterFigure)->getYcell() == pawnEnPassant->getYcell())
+                            {
+                                // если это пешка
+                                if ((*iterFigure)->getType() == "Pawn")
+                                {
+                                    figures.setEnPassant(true);// enPassant = true;
+                                    enPassantX = pawnEnPassant->getXcell();
+                                    enPassantY = pawnEnPassant->getYcell() + 1;
+                                    (*iterFigure)->setAvailableStep(enPassantX, enPassantY);
+                                    break;
+                                }
+                                else break;
+                            }
+                        }
+                    }
+                    // есть ли слева от нее черная фигура
+                    if (board->getCellBoard(pawnEnPassant->getXcell()-1, pawnEnPassant->getYcell()) == "Black")
+                    {
+                        // является ли эта фигура пешкой
+                        for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+                        {
+                            // нашли фигуру
+                            if ((*iterFigure)->getXcell() == pawnEnPassant->getXcell()-1 &&
+                                    (*iterFigure)->getYcell() == pawnEnPassant->getYcell())
+                            {
+                                // если это пешка
+                                if ((*iterFigure)->getType() == "Pawn")
+                                {
+                                    figures.setEnPassant(true);// enPassant = true;
+                                    enPassantX = pawnEnPassant->getXcell();
+                                    enPassantY = pawnEnPassant->getYcell() + 1;
+                                    (*iterFigure)->setAvailableStep(enPassantX, enPassantY);
+                                    break;
+                                }
+                                else break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // ходили черный
+        if (team == "Black")
+        {
+            // пешка совершила длинный шаг
+            if (pawnEnPassant->getYcell() == 3 && pawnEnPassant->getOldYcell() == 1)
+            {
+                // пешка стоит с левого края
+                if (pawnEnPassant->getXcell() == 0)
+                {
+                    // есть ли справа от нее белая фигура
+                    if (board->getCellBoard(pawnEnPassant->getXcell()+1, pawnEnPassant->getYcell()) == "White")
+                    {
+                        // является ли эта фигура пешкой
+                        for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+                        {
+                            // нашли фигуру
+                            if ((*iterFigure)->getXcell() == pawnEnPassant->getXcell()+1 &&
+                                    (*iterFigure)->getYcell() == pawnEnPassant->getYcell())
+                            {
+                                // если это пешка
+                                if ((*iterFigure)->getType() == "Pawn")
+                                {
+                                    figures.setEnPassant(true);
+                                    enPassantX = pawnEnPassant->getXcell();
+                                    enPassantY = pawnEnPassant->getYcell() - 1;
+                                    (*iterFigure)->setAvailableStep(enPassantX, enPassantY);
+                                    break;
+                                }
+                                else break;
+                            }
+                        }
+                    }
+                }
+                // пешка стоит с правого края
+                else if (pawnEnPassant->getXcell() == 7)
+                {
+                    // есть ли слева от нее белая фигура
+                    if (board->getCellBoard(pawnEnPassant->getXcell()-1, pawnEnPassant->getYcell()) == "White")
+                    {
+                        // является ли эта фигура пешкой
+                        for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+                        {
+                            // нашли фигуру
+                            if ((*iterFigure)->getXcell() == pawnEnPassant->getXcell()-1 &&
+                                    (*iterFigure)->getYcell() == pawnEnPassant->getYcell())
+                            {
+                                // если это пешка
+                                if ((*iterFigure)->getType() == "Pawn")
+                                {
+                                    figures.setEnPassant(true);// enPassant = true;
+                                    enPassantX = pawnEnPassant->getXcell();
+                                    enPassantY = pawnEnPassant->getYcell() - 1;
+                                    (*iterFigure)->setAvailableStep(enPassantX, enPassantY);
+                                    break;
+                                }
+                                else break;
+                            }
+                        }
+                    }
+                }
+                // пешка не с краю
+                else
+                {
+                    // есть ли справа от нее белая фигура
+                    if (board->getCellBoard(pawnEnPassant->getXcell()+1, pawnEnPassant->getYcell()) == "White")
+                    {
+                        // является ли эта фигура пешкой
+                        for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+                        {
+                            // нашли фигуру
+                            if ((*iterFigure)->getXcell() == pawnEnPassant->getXcell()+1 &&
+                                    (*iterFigure)->getYcell() == pawnEnPassant->getYcell())
+                            {
+                                // если это пешка
+                                if ((*iterFigure)->getType() == "Pawn")
+                                {
+                                    figures.setEnPassant(true);// enPassant = true;
+                                    enPassantX = pawnEnPassant->getXcell();
+                                    enPassantY = pawnEnPassant->getYcell() - 1;
+                                    (*iterFigure)->setAvailableStep(enPassantX, enPassantY);
+                                    break;
+                                }
+                                else break;
+                            }
+                        }
+                    }
+                    // есть ли слева от нее белая фигура
+                    if (board->getCellBoard(pawnEnPassant->getXcell()-1, pawnEnPassant->getYcell()) == "White")
+                    {
+                        // является ли эта фигура пешкой
+                        for (auto iterFigure = figures.getAllFigures().begin(); iterFigure != figures.getAllFigures().end(); ++iterFigure)
+                        {
+                            // нашли фигуру
+                            if ((*iterFigure)->getXcell() == pawnEnPassant->getXcell()-1 &&
+                                    (*iterFigure)->getYcell() == pawnEnPassant->getYcell())
+                            {
+                                // если это пешка
+                                if ((*iterFigure)->getType() == "Pawn")
+                                {
+                                    figures.setEnPassant(true);// enPassant = true;
+                                    enPassantX = pawnEnPassant->getXcell();
+                                    enPassantY = pawnEnPassant->getYcell() - 1;
+                                    (*iterFigure)->setAvailableStep(enPassantX, enPassantY);
+                                    break;
+                                }
+                                else break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 void ControllerMove::setKings(VectorOfFigures &figures)

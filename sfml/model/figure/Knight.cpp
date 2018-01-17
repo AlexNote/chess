@@ -26,6 +26,8 @@ Knight::Knight(QString team, int x, int y)
 Knight::Knight(const Knight &copy) : Figure::Figure(copy)
 {
     team = copy.team;
+    availableSteps = copy.availableSteps;
+    allBeatCells = copy.allBeatCells;
     if (team == "White")
     {
         spriteFigure.setTextureRect(sf::IntRect(192, 64, 64, 64));

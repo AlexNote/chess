@@ -26,6 +26,8 @@ Queen::Queen(QString team, int x, int y)
 Queen::Queen(const Queen &copy) : Figure::Figure(copy)
 {
     team = copy.team;
+    availableSteps = copy.availableSteps;
+    allBeatCells = copy.allBeatCells;
     if (team == "White")
     {
         spriteFigure.setTextureRect(sf::IntRect(64, 64, 64, 64));

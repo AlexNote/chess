@@ -1,6 +1,16 @@
 #include "VectorOfFigures.h"
 #include <QDebug>
 
+void VectorOfFigures::setEnPassant(bool enPas)
+{
+    enPassant = enPas;
+}
+
+bool VectorOfFigures::getEnPassant()
+{
+    return enPassant;
+}
+
 VectorOfFigures::VectorOfFigures()
 {
     /// белые фигуры
@@ -114,6 +124,7 @@ QString VectorOfFigures::getCurrentStep()
 void VectorOfFigures::setCurrentStep(QString curStep)
 {
     currentStep = curStep;
+    enPassant = false;
 }
 
 sf::Sprite VectorOfFigures::getChahgeWhite()
@@ -156,7 +167,7 @@ std::shared_ptr<MementoFigures> VectorOfFigures::save()
         copyVector.emplace_back(allFigures[i]->clone());
     }
 
-    return std::shared_ptr<MementoFigures>(new MementoFigures(copyVector, currentStep));
+    return std::shared_ptr<MementoFigures>(new MementoFigures(copyVector, currentStep, enPassant));
 }
 
 void VectorOfFigures::load(const std::shared_ptr<MementoFigures> figuresSave)
@@ -165,4 +176,5 @@ void VectorOfFigures::load(const std::shared_ptr<MementoFigures> figuresSave)
 
     allFigures.swap(tmpVec);
     currentStep = figuresSave->getCurrentStep();
+    enPassant = figuresSave->getEnPassant();
 }

@@ -11,11 +11,13 @@ class MementoFigures
 private:
     std::vector< std::shared_ptr<Figure> > allFigures;
     QString currentStep;
+    bool enPassant;
 
 public:
-    MementoFigures(std::vector<std::shared_ptr<Figure> > allFigures, QString currentStep);
+    MementoFigures(std::vector<std::shared_ptr<Figure> > allFigures, QString currentStep, bool enPassant);
     std::vector< std::shared_ptr<Figure> > getFigures();
     QString getCurrentStep();
+    bool getEnPassant();
 };
 
 #endif // MEMENTOFIGURES_H

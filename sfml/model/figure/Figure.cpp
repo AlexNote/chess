@@ -83,6 +83,11 @@ void Figure::setAvailableStep(int x, int y)
     availableSteps[y][x] = true;
 }
 
+void Figure::setBeatCell(int x, int y)
+{
+    allBeatCells[y][x] = true;
+}
+
 bool Figure::getAvailableStep(int x, int y)
 {
     return availableSteps[y][x];
